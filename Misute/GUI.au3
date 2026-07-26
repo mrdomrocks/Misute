@@ -26,15 +26,6 @@ Else
 EndIf
 GUICtrlCreateGroup("", -99, -99, 1, 1)
 
-Global $FarmCombo
-$Group2 = GUICtrlCreateGroup("Select Farm", 16, 76, 160, 49)
-$FarmCombo = GUICtrlCreateCombo("", 24, 92, 144, 25, BitOR($CBS_DROPDOWN,$CBS_AUTOHSCROLL))
-
-For $i = 0 To UBound($g_a_Farms) - 1
-    GUICtrlSetData($FarmCombo, $g_a_Farms[$i][0])
-Next
-GUICtrlCreateGroup("", -99, -99, 1, 1)
-
 ; Buttons/Checkboxes
 $GUIStartButton = GUICtrlCreateButton("Start", 185, 38, 57, 25)
 GUICtrlSetOnEvent($GUIStartButton, "GuiButtonHandler")
@@ -73,8 +64,6 @@ Func GuiButtonHandler()
 
                 GUICtrlSetState($GUIToggleRendering, $GUI_ENABLE)
                 GUICtrlSetState($GUIStartButton, $GUI_DISABLE)
-                GUICtrlSetState($FarmCombo, $GUI_DISABLE)
-
                 GUICtrlSetData($GUIStartButton, "Stop")
                 GUICtrlSetState($GUIStartButton, $GUI_ENABLE)
                 $BotRunning = True
@@ -138,7 +127,6 @@ EndFunc
 
 Func ResetStart()
     GUICtrlSetState($GUIStartButton, $GUI_ENABLE)
-    GUICtrlSetState($FarmCombo, $GUI_ENABLE)
     GUICtrlSetData($GUIStartButton, "Start")
     LogStatus("Bot paused.")
     Sleep(500)
