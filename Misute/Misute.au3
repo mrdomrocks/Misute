@@ -68,7 +68,7 @@ WEnd
 
 While True
     If $BotRunning = True Then
-        RunSelectedFarm()
+        Main()
     Else
         Sleep(1000)
     EndIf
@@ -78,31 +78,7 @@ WEnd
 ; Functions
 ; =======================
 
-Func RunSelectedFarm()
-    Local $FarmToRun = GUICtrlRead($FarmCombo)
-
-    If $FarmToRun = "" Then
-        LogError("Error: No farm selected.")
-        LogError("Bot will close in 5 seconds...")
-        Sleep(5000)
-        Exit
-    EndIf
-
-    For $i = 0 To UBound($g_a_Farms) - 1
-        If $g_a_Farms[$i][0] = $FarmToRun Then
-            If $g_a_Farms[$i][1] = "" Then Return False
-
-            AdlibRegister("UpdateTotalTime", 1000)
-            $TotalTime = TimerInit()
-            UpdateStats()
-            LogInfo("Starting farm: " & $FarmToRun)
-            Return Call($g_a_Farms[$i][1])
-        EndIf
-    Next
-
-    LogError("Error: No valid farm selected.")
-    LogError("Bot will close in 5 seconds...")
-    Exit
+Func Main()
 EndFunc
 
 ; =======================
