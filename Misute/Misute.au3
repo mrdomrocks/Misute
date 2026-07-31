@@ -33,6 +33,8 @@ OnAutoItExitRegister("_OnExitLog")
 
 #EndRegion Declaration
 
+#include "Farms/Farms_All.au3"
+
 ; =======================
 ; Command line arguments
 ; =======================
