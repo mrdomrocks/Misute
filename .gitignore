@@ -1,2 +1,5 @@
 *.txt
 *.ini
+
+# The party setup ships with the bot as a documented starting point.
+!Misute/Vanquisher/Vanquisher.ini
