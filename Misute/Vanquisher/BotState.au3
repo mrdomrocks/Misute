@@ -3,17 +3,9 @@
 
 #cs ----------------------------------------------------------------------------
 
-    BotState.au3
-
-    The contract between the GUI and the bot.
-
-    The controller writes what it is doing into this module. The GUI reads it.
-    Neither side knows anything about the other, which is what makes the GUI
-    replaceable: write a new display that reads these accessors and the bot
-    keeps working untouched.
-
-    Everything in here is deliberately dumb - it stores values, formats
-    durations and owns the timers. No workflow decisions are made here.
+    BotState.au3 - the contract between the GUI and the bot. The controller
+    writes what it is doing, the GUI reads it; neither knows the other exists.
+    Deliberately dumb: values, durations and timers, no workflow decisions.
 
 #ce ----------------------------------------------------------------------------
 

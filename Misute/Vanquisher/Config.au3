@@ -92,6 +92,13 @@ Global Const $PATH_WAYPOINT_SKIP_RANGE = 200
 
 ;~ How many portal hops one zone transfer may take before it is given up on.
 Global Const $MAX_PORTAL_HOPS = 24
+
+;~ Death recovery. A full wipe is not the end of an attempt: the game brings
+;~ the party back at a resurrection shrine (usually after ~15 seconds) and the
+;~ route is resumed from the waypoint nearest the death spot. Only when the
+;~ same job wipes this many times is the attempt failed.
+Global Const $MAX_DEATHS_PER_JOB = 3
+Global Const $RESPAWN_TIMEOUT_MS = 30000
 #EndRegion Pathfinder
 
 #Region Vanquishing

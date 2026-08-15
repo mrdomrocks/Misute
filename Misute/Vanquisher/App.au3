@@ -2,25 +2,12 @@
 
 #cs ----------------------------------------------------------------------------
 
-    App.au3 - the application itself, shared by both entry points.
+    App.au3 - the application, shared by both entry points (Vanquisher.au3 for
+    a real client, Simulation.au3 for none). GUI over controller over adapters;
+    the loop below is the whole scheduler: one slice of bot work, one repaint,
+    a short sleep.
 
-        Vanquisher.au3   attaches to a Guild Wars client
-        Simulation.au3   runs the same application with no client at all
-
-    It wires the pieces together and then does nothing but turn the handle:
-
-        GUI            GUI.au3            what the user sees
-         |
-        Controller     BotController.au3  the state machine, queue and retries
-         |
-        Adapters       Pathfinder.au3 / GuildWars.au3   the game
-
-    The loop below is the whole scheduler: one slice of bot work, one repaint, a
-    short sleep. Because no step blocks for long, the window stays responsive
-    and a stop request is picked up within a few milliseconds.
-
-    Command line:
-        -character "My Character" [-autostart]
+    Command line: -character "My Character" [-autostart]
 
 #ce ----------------------------------------------------------------------------
 

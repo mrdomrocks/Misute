@@ -22,22 +22,13 @@
 
 #cs ----------------------------------------------------------------------------
 
-    GUI.au3
+    GUI.au3 - the display: header with the controls, status cards, a tabbed
+    panel for the zone list and party setup, and the activity log.
 
-    The display: a header with the controls, a column of status cards, a tabbed
-    panel for the zone list and the party setup, and the activity log along the
-    bottom.
-
-    Two rules keep it replaceable:
-
-        1. Event handlers never do bot work. They call StartBot(), RequestStop()
-           or a Bot_* helper and return immediately.
-        2. Everything shown here is read from BotState.au3, Maps.au3 and
-           PartyConfig.au3. The GUI is never told what to display.
-
-    GUIOnEventMode is used, so a click is handled between two statements of the
-    application loop. Because the controller is a tick machine, the window keeps
-    repainting and the buttons stay responsive while the bot runs.
+    Two rules keep it replaceable: event handlers only ever call StartBot(),
+    RequestStop() or a Bot_* helper, and everything shown is read from
+    BotState.au3, Maps.au3 and PartyConfig.au3 - the GUI is never told what to
+    display.
 
 #ce ----------------------------------------------------------------------------
 
@@ -230,12 +221,12 @@ Func GUI_CreateTabs()
 	$g_idMapList = GUICtrlCreateListView("Zone|Region|Party|Status|Att|Detail", _
 			$GUI_RIGHT_X + 8, $iY + 30, $GUI_RIGHT_W - 16, $iHeight - 42, -1, _
 			BitOR($LVS_EX_FULLROWSELECT, $LVS_EX_GRIDLINES))
-	_GUICtrlListView_SetColumnWidth($g_idMapList, $eLVCOL_MAP, 150)
-	_GUICtrlListView_SetColumnWidth($g_idMapList, $eLVCOL_REGION, 70)
-	_GUICtrlListView_SetColumnWidth($g_idMapList, $eLVCOL_PARTY, 45)
-	_GUICtrlListView_SetColumnWidth($g_idMapList, $eLVCOL_STATUS, 80)
-	_GUICtrlListView_SetColumnWidth($g_idMapList, $eLVCOL_ATTEMPTS, 35)
-	_GUICtrlListView_SetColumnWidth($g_idMapList, $eLVCOL_DETAIL, 145)
+	_GUICtrlListView_SetColumnWidth($g_idMapList, $eLVCOL_MAP, 152)
+	_GUICtrlListView_SetColumnWidth($g_idMapList, $eLVCOL_REGION, 92)
+	_GUICtrlListView_SetColumnWidth($g_idMapList, $eLVCOL_PARTY, 40)
+	_GUICtrlListView_SetColumnWidth($g_idMapList, $eLVCOL_STATUS, 76)
+	_GUICtrlListView_SetColumnWidth($g_idMapList, $eLVCOL_ATTEMPTS, 30)
+	_GUICtrlListView_SetColumnWidth($g_idMapList, $eLVCOL_DETAIL, 126)
 
 	GUICtrlCreateTabItem("Party")
 	GUICtrlCreateLabel("The team taken into a zone depends on the party size the area allows." & @CRLF & _

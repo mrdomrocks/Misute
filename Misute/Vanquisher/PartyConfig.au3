@@ -4,25 +4,11 @@
 
 #cs ----------------------------------------------------------------------------
 
-    PartyConfig.au3
-
-    The team the bot takes into a zone, read from Vanquisher.ini.
-
-    Guild Wars caps the party size per area, so one team will not do: a 4 man
-    area needs three companions, a 6 man area five and an 8 man area seven. The
-    ini therefore has one section per size:
-
-        [Team4]                 [Team6]                 [Team8]
-        Hero1=Norgu             Hero1=Norgu             Hero1=Norgu
-        Hero2=Gwen              ...                     ...
-        Henchman1=2001          Henchman1=2001          Henchman1=2001
-
-    Heroes are named (the API resolves the name to a hero id). Henchmen are
-    listed by their player number, because henchman names are not readable from
-    the client - the number is shown by any agent inspector and is stable.
-
-    Slots are filled heroes first, then henchmen, and the list is trimmed to the
-    area's limit, so an over-filled section is harmless.
+    PartyConfig.au3 - the teams read from Vanquisher.ini, one section per area
+    size ([Team4]/[Team6]/[Team8], keys Hero1..N and Henchman1..N). Heroes are
+    named; henchmen use their player number, the only henchman identifier
+    readable from the client. Heroes fill first, then henchmen, trimmed to the
+    area's limit, so an over- or under-filled section is harmless.
 
 #ce ----------------------------------------------------------------------------
 

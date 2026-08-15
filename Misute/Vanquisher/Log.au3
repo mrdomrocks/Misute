@@ -4,18 +4,10 @@
 
 #cs ----------------------------------------------------------------------------
 
-    Log.au3
-
-    Central logging. The bot logic calls VqLog_Write() (or one of the level
-    helpers) and never touches a GUI control.
-
-    A display registers itself once:
-
-        VqLog_RegisterSink("GUI_OnLogLine")
-
-    and is then called back with the formatted line and its level. The last
-    $LOG_RING_SIZE lines are also kept in memory, so a display that is created
-    (or recreated) later can replay the recent history with VqLog_ReplayTo().
+    Log.au3 - central logging. The bot calls the VqLog_* helpers and never
+    touches a GUI control; a display registers a sink callback and can replay
+    the last $LOG_RING_SIZE lines. Named VqLog_* because GwAu3 already defines
+    Log_Info() and Log_Error().
 
 #ce ----------------------------------------------------------------------------
 

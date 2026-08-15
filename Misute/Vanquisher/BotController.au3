@@ -9,33 +9,20 @@
 
 #cs ----------------------------------------------------------------------------
 
-    BotController.au3
+    BotController.au3 - the bot itself: work queue, retries, the two hour
+    per-attempt ceiling and the stop handling. Driven by StartBot() and
+    RequestStop(); progress is published through BotState.au3 only.
 
-    The bot itself: work queue, retries, the two hour per-attempt ceiling and
-    the stop handling.
-
-    It is written as a tick machine. The application loop calls Bot_Tick() over
-    and over; each call does one small piece of work and returns. That is what
-    keeps the GUI alive, makes the stop button responsive and lets the zone
-    timer be checked continuously - no Sleep(7200000) anywhere.
-
-    The controller knows nothing about the GUI. It publishes progress through
-    BotState.au3 and text through Log.au3, and it is driven by exactly two
-    public entry points:
-
-        StartBot()      begin a run
-        RequestStop()   ask the run to stop at the next safe point
-
-    Flow of one zone:
+    It is a tick machine - Bot_Tick() does one small piece of work per call, so
+    the GUI stays alive and the zone timer is checked continuously.
 
         NEXT_MAP -> TRAVELLING -> PREPARING -> ENTERING -> VANQUISHING -> CONFIRMING
              ^                                    |            |              |
              |                                    +------------+--------------+
              +---------------------- RECOVERING <------- (failure / timeout)
 
-    ENTERING is where caravanning happens: it walks portal to portal until it
-    reaches the zone, and if it passes through another zone from the list on the
-    way, that zone is vanquished first (see Bot_ClaimCurrentZone).
+    ENTERING is where caravanning happens: portal to portal until the zone is
+    reached, vanquishing any zone from the list crossed on the way.
 
 #ce ----------------------------------------------------------------------------
 
@@ -422,10 +409,8 @@ Func Bot_TickEntering()
 			Bot_AttemptFailed("Could not reach " & $sMapName & " - " & Pathfinder_GetLastError())
 
 		Case Else
-			If GW_IsPartyDead() Then
-				Bot_AttemptFailed("The party was defeated on the way to " & $sMapName & ".")
-				Return
-			EndIf
+			; Party wipes are recovered inside the pathfinder (it waits for the
+			; shrine and carries on), so they are not checked here.
 
 			; A zone we are only passing through still counts if it is on the
 			; list, and clearing it now saves walking back to it later.
@@ -486,10 +471,9 @@ Func Bot_TickVanquishing()
 			EndIf
 
 		Case $ePATH_FAILED
+			; This includes one wipe too many - the pathfinder recovers from a
+			; wipe on its own by resuming from the waypoint nearest the death.
 			Bot_AttemptFailed("Pathfinder failed in " & $sMapName & " - " & Pathfinder_GetLastError())
-
-		Case Else
-			If GW_IsPartyDead() Then Bot_AttemptFailed("The party died in " & $sMapName & ".")
 	EndSwitch
 EndFunc   ;==>Bot_TickVanquishing
 
