@@ -1,5 +1,5 @@
 #RequireAdmin
-#include "../../API/_GwAu3.au3"
+#include "../../../API/_GwAu3.au3"
 #include "GwAu3_AddOns.au3"
 
 #Region Declarations
@@ -32,6 +32,8 @@ FileDelete($g_s_LogFile)
 OnAutoItExitRegister("_OnExitLog")
 
 #EndRegion Declaration
+
+#include "Farms/Farms_All.au3"
 
 ; =======================
 ; Command line arguments
